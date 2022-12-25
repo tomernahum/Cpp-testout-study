@@ -11,8 +11,9 @@ if we declare a type for a pointer its just what we expect it to be pointing to
 - to point to a variable do &var
 - to read whats at a pointer do *pointer
 
-- pointers type is int*, Person* etc, can also use void* if we're not going to write to it
-
+- pointers type is int*, Person* etc,   can also use void* if we're not going to write to it
+    | [type pointed to]* varName = &varPointedTo
+- * is not technically part of the type but im thinking of it that way rn
 */
 int main()
 {

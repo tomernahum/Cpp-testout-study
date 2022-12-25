@@ -1,0 +1,5 @@
+
+
+- #____ statements are pre-proccessor statements
+
+- operators are just functions (<< is an operator)

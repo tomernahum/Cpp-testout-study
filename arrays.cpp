@@ -3,6 +3,11 @@ using namespace std;
 
 /*
     Arrays are fixed size
+
+    an array is really a pointer to the beginning of the array (then the elements are stored next to each other in memory)
+    int example[5];
+    type of 
+
 */
 
 int main()

@@ -31,6 +31,7 @@ int main()
     example3[2] = 10;
     //^V Equivilent  (aside from the numbers)
     *(example+2) = 11;
+    
     LOG(example[2]);
     
     /*

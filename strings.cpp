@@ -2,7 +2,10 @@
 
 #define LOG(x) std::cout << x << std::endl
 /*
-Strings 
+Strings (literal strings not std strings)
+
+- strings are/must be const char arrays 
+(can not be edited)
 */
 int main() {
     "Hello"; 
@@ -22,7 +25,7 @@ int main() {
 
     //normal array test
     LOG("");
-    
+
     int test[] = {9,8,7};
     LOG(test); //pointer
 
@@ -30,6 +33,27 @@ int main() {
     LOG(testC); //when its a char array it knows to read it like a string not a pointer (i guess)
     
 
+
+    LOG("");
+    /*
+    - Not allowed to have non-const string char array pointer 
+    (undefined behavior, inconsistent across compilers, some won't let you compile)
+    
+    - if you want a mutable char array you can use []
+
+    char ttest[] = "Hello";
+    ttest[4] = "!"; //in the compiler im using g++ it puts an error here
+    */
+
+    char mTest[] = {'O','M','G','\0'};
+    LOG(mTest);
+    mTest[2] = 'M';
+    LOG(mTest);
+
+
+
+    LOG("\n"<< "Hello"[4]); //reading works you just cant write
+    
 
 
     return 0;

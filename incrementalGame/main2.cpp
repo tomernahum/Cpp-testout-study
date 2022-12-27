@@ -29,35 +29,10 @@ Pseudocode
 #include <iostream>
 #include <thread>
 
-namespace backgroundThread
-{
-    //"private"
-    static bool m_running = true;
-    void bgWorkerFunction()
-    {
-        while (m_running)
-        {
-            print("hello");
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        }
-    }
-    std::thread bgthread;
-
-    //"public"
-    void startBackgroundThread()
-    {
-        m_running = true;
-        bgthread = std::thread(&bgWorkerFunction);
-    }
-    void stopBackgroundThread()
-    {
-        m_running = false;
-        bgthread.join();
-    }
-}
-
-
-
+/* 
+Could make the class take a function pointer on init and a time interval to run it, 
+then do the while loop and delay and run the function
+*/
 class BackgroundWorker
 {
 public:
@@ -77,6 +52,16 @@ private:
     bool running;
     std::thread bgthread;
     void bgWorkerFunction(){
+
+        while (running)
+        {
+            print("hello");
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        }
+    }
+
+    void bgWorkerTestFunction(){
         while (running)
         {
             print("hello");
@@ -86,22 +71,39 @@ private:
 };
 
 
+// draft.  likely make this global/singleton so stuff can modify it, i heard global=bad though
+class GameData
+{
+public:
+    int points;
+    float pointsPerSecond(){
+        return 1;
+    };
+    std::string upgrades[10][2]; //todo figure out proper type etc
+
+
+};
+
+
 int main()
 {
-    if (false)
-    {
-        backgroundThread::startBackgroundThread();
-
-        std::string x;
-        std::cin >> x;
-
-        backgroundThread::stopBackgroundThread();
-    }
+    int points = 0; //todo: make it unsigned long and then make it work infinitely if you feel like it
 
     BackgroundWorker backgroundWorker;
     backgroundWorker.startBackgroundThread();
-    std::string x;
-    std::cin >> x;
+    
+    while (true) {
+        std::string userInput;
+        std::cin >> userInput;
+
+        if (userInput == "exit"){
+            break;
+        }
+    }
+    
+    
+    
+    
     backgroundWorker.stopBackgroundThread();
 
     return 0;

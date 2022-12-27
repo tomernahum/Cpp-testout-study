@@ -2,7 +2,7 @@
 
 //using namespace std;
 
-#define LOG(x) std::cout << x << std::endl
+#define print(x) std::cout << x << std::endl
 
 
 
@@ -47,6 +47,13 @@ class Challenge {
         std::string m_answer;  
 };
 
+#include <chrono>
+#include <thread>
+void sleep(float seconds){
+    const int milliseconds = 1000*seconds;
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
+
 
 //maybe one of the challenges the answer can be a hint for being able to unlock Shop
 int main()
@@ -57,11 +64,11 @@ int main()
     Challenge currentChallenge = Challenge(0); //same as Challenge currentChallenge(0)
     while (true){
         
-        std::cout << std::endl;
-        std::cout << points << " points" << std::endl;
-        std::cout << "Your next problem: " << currentChallenge.getQuestion() << std::endl;
-        std::cout << std::endl;
-        
+        print(points << " points");
+        sleep(0.1); //todo make this one function
+        print( "Your next problem: " << currentChallenge.getQuestion() );
+        sleep(0.1);
+
 
         std::cout << "> ";
         std::string userInput;
@@ -82,11 +89,19 @@ int main()
             std::cout << "incorrect!" << std::endl;
         }
 
+                
+        sleep(0.5);
+        print("");
+
 
 
     }
 
-    
+    /*
+    todo: 
+        - run function to increment points every x seconds
+        - overwrite display in console
+    */
     
     return 0;
 }

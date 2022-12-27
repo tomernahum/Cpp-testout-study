@@ -6,7 +6,7 @@
 
 // !!! You need to do -pthread when compiling dont ask me why i dont even need to be learning threads in the first place i am on time crunch //also try -lpthread idk
 
-bool is_finished = false;
+bool is_finished = false; //tutorial guy made this static
 void DoWorkk()
 {
     while (!is_finished){
@@ -18,8 +18,9 @@ void DoWorkk()
 
 int main()
 {
-    std::thread workerr(DoWorkk); //aka    thread workerrr = thread(DoWorkk);
+    std::thread workerr(&DoWorkk); //aka    thread workerrr = thread(DoWorkk);
     //^^ this immediatley starts the thread running the function
+    //(can omit the & but its implicitly there)
 
     std::string x;
     std::cin >> x; //seems to wait for you to enter something besides nothing

@@ -54,6 +54,7 @@ class Test2 {
 
 int main()
 {
+    //i tested it and nested functions are not a thing, though you can use lambdas 
     
     Test2 test = Test2();
     test.main();

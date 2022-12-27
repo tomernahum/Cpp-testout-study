@@ -56,19 +56,23 @@ namespace backgroundThread
     }
 }
 
-class backgroundWorker
+
+
+class BackgroundWorker
 {
 public:
+    //need to call stop background thread sometime in program or else runtime error
     void startBackgroundThread()
     {
         running = true;
-        bgthread = std::thread(&bgWorkerFunction);
+        bgthread = std::thread(&BackgroundWorker::bgWorkerFunction, this); //dont 100% understand why it has to be done this way
     }
     void stopBackgroundThread()
     {
         running = false;
         bgthread.join();
     }
+
 private:
     bool running;
     std::thread bgthread;
@@ -84,12 +88,21 @@ private:
 
 int main()
 {
-    backgroundThread::startBackgroundThread();
+    if (false)
+    {
+        backgroundThread::startBackgroundThread();
 
+        std::string x;
+        std::cin >> x;
+
+        backgroundThread::stopBackgroundThread();
+    }
+
+    BackgroundWorker backgroundWorker;
+    backgroundWorker.startBackgroundThread();
     std::string x;
     std::cin >> x;
-
-    backgroundThread::stopBackgroundThread();
+    backgroundWorker.stopBackgroundThread();
 
     return 0;
 }

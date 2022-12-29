@@ -35,12 +35,6 @@ std::string formatNumberWithCommas(int n) {
 
 //framerate test
 
-
-void doStuff(int count){
-    print(count);
-}
-
-
 double fpsTest(int secondsToRun, void(*doStuffFunction)(int)) //takes in a function (function pointer), chatGPT told me there is also a std::function but yeah, im very scared
 {
     double fps;
@@ -67,10 +61,10 @@ double fpsTest(int secondsToRun, void(*doStuffFunction)(int)) //takes in a funct
 
 int main(int argc, char const *argv[])
 {
-    float secondsToRun;
-    std::cout << "How many seconds would you like to test per function (we'll run 3 functions) : ";
+    int secondsToRun;
+    std::cout << "How many seconds (int) would you like to test per function (we'll run 3 functions) : ";
     std::cin >> secondsToRun;
-    std::cout <<"\n";
+    std::cout <<"\n"; 
 
 
     auto printCountFunc = [](int count){

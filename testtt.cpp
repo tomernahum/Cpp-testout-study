@@ -34,10 +34,15 @@ std::string formatNumberWithCommas(int n) {
 
 
 //framerate test
-int main(int argc, char const *argv[])
-{
-    const int SECONDS_TO_RUN = 1;
 
+
+void doStuff(int count){
+    print(count);
+}
+
+
+double fpsTest(int secondsToRun, void(*doStuffFunction)(int)) //takes in a function (function pointer), chatGPT told me there is also a std::function but yeah, im very scared
+{
     double fps;
     
     auto startTime = std::chrono::high_resolution_clock::now();
@@ -45,20 +50,58 @@ int main(int argc, char const *argv[])
     while (true)
     {
         count++;
-        print(count);
+        doStuffFunction(count);
 
         auto currentTime = std::chrono::high_resolution_clock::now();
         auto timeElapsed = currentTime - startTime;
-        if (timeElapsed > std::chrono::seconds(SECONDS_TO_RUN))
+        if (timeElapsed > std::chrono::seconds(secondsToRun))
         {
             break;
         }
     }
-    
-    print("");
-    //print(count/SECONDS_TO_RUN);
-    print("fps: " << formatNumberWithCommas(count/SECONDS_TO_RUN));
+    return count/secondsToRun;
     //didnt figure out how to get true clock speed at last loop
+
+}
+
+
+int main(int argc, char const *argv[])
+{
+    float secondsToRun;
+    std::cout << "How many seconds would you like to test per function (we'll run 3 functions) : ";
+    std::cin >> secondsToRun;
+    std::cout <<"\n";
+
+
+    auto printCountFunc = [](int count){
+        print(count);
+    };
+    double printCountFPS = fpsTest(secondsToRun, printCountFunc);
+    print("print count fps: " << formatNumberWithCommas(printCountFPS));
+
+    
+    auto doNothingFunc = [](int count){
+    };
+    double doNothingFPS = fpsTest(secondsToRun, doNothingFunc);
+    print("empty function fps: " << formatNumberWithCommas(doNothingFPS));
+
+    // Declare a 3D array with typical screen width/height and 3 depth/rgb layers, to try to simulate what the fps of a game might be
+    static int canvas[1920][1080][3];  //dont fully understand 3d arrays i copied this from chatGPT actually its gonna become a crutch i need to cut it off i think idk idk idk
+    auto busyFunc1 = [](int count){
+        // Assign values to each of the elements in the canvas 3d array
+        for (int i = 0; i < 1920; i++) {
+            for (int j = 0; j < 1080; j++) {
+                for (int k = 0; k < 3; k++) {
+                    canvas[i][j][k] = i + j + k;
+                }
+            }
+        }
+    };
+    double busyFunc1FPS = fpsTest(secondsToRun, busyFunc1);
+    print("1080p array loop fps: " << formatNumberWithCommas(busyFunc1FPS));
+
+
+
     
     return 0;
 }

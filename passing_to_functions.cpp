@@ -19,8 +19,11 @@ void AprintTestObjAndAdd1(TestObj t){
 }
 
 void BprintTestObjAndAdd1(TestObj* t){
-    (*t).val = (*t).val + 1;
-    std::cout << (*t).val << "\n";
+    //(*t).val = (*t).val + 1; 
+    //std::cout << (*t).val << "\n";
+    //  V^alternate ways to write
+    t->val = t->val + 1;
+    std::cout << t->val << "\n";
     /*
     if we want to modify the object passed in 
     we can pass in a pointer to the function
@@ -41,7 +44,7 @@ void CprintTestObjAndAdd1(TestObj& t){
 
 //illustration of pass by reference
 void ex(TestObj* t) {
-    TestObj t = *t; //this is what function C does automatically pretend it worked (overwritten old t with new t)
+    //TestObj t = *t; //this is what function C does automatically pretend it worked (overwritten old t with new t)
     //t.val = t.val + 1;
     //std::cout << t.val << "\n";
 }

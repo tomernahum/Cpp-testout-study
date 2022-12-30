@@ -146,6 +146,9 @@ def main(input_str:str):
 #for some reason its seems much easier for me to do this in python then to try to write pseudocode like i was doing
 #probably could have done a better way who knows, I will find out what the presentation did after I complete this
 
+# presentation did a smart thing where they had input and output vars
+# and they got rid of stuff from input but kept it arround and added stuff to output
+# also they didnt bother with more than 1000
 
 if __name__ == "__main__":
     print(main((input())))

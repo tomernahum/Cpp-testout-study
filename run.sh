@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 g++ "$@" -pthread && ./a.out
 
 

@@ -35,20 +35,14 @@ def convert_two_digit_num(input_num:int):  #20 21 22 23
 
 
     tens_digit, ones_digit =  get_list_of_digits_from_num(input_num)
+    if ones_digit == "zero":
+        ones_digit = ""
     
     
     out = f"{tens_place_num_names[tens_digit]} {convert_single_digit_num(ones_digit)}"
     return out
 
 
-place_names = {  #10^x   #just a draft not called
-    2: "hundred",
-    3: "thousand", #eg 1000
-    4: "thousand", #eg 10,000
-    5: "thousand", #eg 100,000
-    6: "million", #eg 1,000,000
-    9: "billion", #eg 1,000,000,000
-}
 def convert_three_digit_num(input_num:int):
     digits = get_list_of_digits_from_num(input_num)  #eg 1,2,3
     
@@ -58,20 +52,95 @@ def convert_three_digit_num(input_num:int):
     out_1 = convert_single_digit_num(digits[0]) + " hundred"
     out_2 = convert_two_digit_num((digits[1]*10 + digits[2]))
 
+    if out_2 == "zero": out_2 = ""
+
     return f"{out_1} {out_2}"
+
+
+place_names_for_reference_not_used = {  #10^x   #just a draft not called
+    2: "hundred",
+    3: "thousand", #eg 1000
+    4: "thousand", #eg 10,000
+    5: "thousand", #eg 100,000
+    6: "million", #eg 1,000,000
+    9: "billion", #eg 1,000,000,000
+    12: "trillion", #eg 1,000,000,000,000
+}
+
+#For any place it be like that ykwim""
 
 def convert_any_digit_num(input_num:int):
     digits = get_list_of_digits_from_num(input_num)
+
+    if len(digits) <= 3:
+        return convert_three_digit_num(input_num)
+
+    #break it up by three places
+    #eg 1,503,920,171   >>  001 billion, 503 million, 920 thousand, 171,
+    #1- break it into groups of three   2- convert those groups to the number + the post-fix   3- join it all together
+    
+    
+    def getDigitGroups(digits):
+        digit_groups = []
+        for i, digit in enumerate(reversed(digits)):
+            if i % 3 == 0:
+                digit_groups.insert(0, [])
+            digit_groups[0].insert(0, digit)
+        while len(digit_groups[0]) < 3:
+            digit_groups[0].insert(0, 0)
+        return digit_groups
+    digit_groups = getDigitGroups(digits) #get a 2d list of each digit broken up by where the commas would be
+
+    #this could be extracted into function maybe
+    postfix_list = [
+        "", " thousand", " million",
+        " billion", " trillion", " quadrillion",
+        " quintillion", " sextillion", " septillion",
+        " octillion", " nonillion", " decillion", 
+        " undecillion", " duodecillion", " tredicilion",
+        " quattuordecillion"
+    ]
+    
+    
+    output = ""
+
+    for count, digit_group in enumerate(reversed(digit_groups)):
+        number = digit_group[0]*100 + digit_group[1]*10+digit_group[2]
+
+        postfix = postfix_list[count]
+        number_words = convert_three_digit_num(number)
+        output = f"{number_words}{postfix}, " + output
+    
+    output = output[0:-2] #get rid of last space and ,
+    
+    return output
+
 
 
 def convert_cents(input_cents_num:int):
     return f"{input_cents_num}/100"
 
-def main(input_num:int):
+def main(input_str:str):
 
-    dollars = input_num
-    cents = 0
-    return f"{convert_three_digit_num(dollars)} and {convert_cents(cents)}"
+    """
+    break it into problems
+    1: break into left hand side && cents
+                                   convert cents: easy see above
+    left hand side:
+    1. break into groups of three   
+    2. convert group of three digits into words
+    3. find postfix for each group of three word (eg thousand, million)
+    4. join back together
+
+    join back left hand and right hand (easy)
+    """
+    try:
+        dollars = int(input_str)
+        cents = 0
+    except:
+        dollars, cents = [int(num) for num in str(input_str).split(".")]
+    
+    return f"{convert_any_digit_num(dollars)} and {convert_cents(cents)}"
 
 
 #for some reason its seems much easier for me to do this in python then to try to write pseudocode like i was doing
@@ -79,4 +148,4 @@ def main(input_num:int):
 
 
 if __name__ == "__main__":
-    print(main(int(input())))
+    print(main((input())))

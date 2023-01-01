@@ -3,10 +3,10 @@
 #include <iostream>
 
 
-class Example
+class ExampleClass
 {
 public:
-    Example(int primary, int secondary)
+    ExampleClass(int primary, int secondary)
     {
         //m_primary = primary;
         //m_secondary = secondary;
@@ -16,7 +16,7 @@ public:
     }
 
     // this > other
-    bool isGreaterThan(Example other)
+    bool isGreaterThan(ExampleClass other)
     {
         if (this->primary == other.primary)
         {
@@ -29,7 +29,7 @@ public:
     }
 
     //operator overloading
-    bool operator>(Example other)
+    bool operator>(ExampleClass other)
     {
         return isGreaterThan(other);
     }
@@ -51,8 +51,8 @@ int main(int argc, char const *argv[])
     (left operates on the right)
     */
 
-    Example one(5, 0);
-    Example two(5, 9);
+    ExampleClass one(5, 0);
+    ExampleClass two(5, 9);
     //(two is greater than one)
 
     print(one.isGreaterThan(two));

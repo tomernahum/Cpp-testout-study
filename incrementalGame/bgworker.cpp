@@ -1,72 +1,32 @@
+#include "bgworker.hpp"
 
-#include <iostream>
-#include <thread>
-
-#define print(x) std::cout << x << std::endl
-
-class BackgroundWorker
+BackgroundWorker::BackgroundWorker(void (*function_pointer)(), int milliseconds_frequency)
+    : customFunctionPointer(function_pointer), millisecondsFrequency(milliseconds_frequency)
 {
-public:
-    BackgroundWorker(void (*function_pointer)(), int miliseconds_frequency)
-    {
-        m_Function = function_pointer;
-        m_milisecondsFrequency = miliseconds_frequency;
-    }
-
-    void startBackgroundThread()
-    {
-        running = true;
-        bgthread = std::thread(&BackgroundWorker::bgWorkerFunction, this); // dont 100% understand why it has to be done this way
-    }
-
-    // need to call stop background thread sometime in program or else runtime error
-    void stopBackgroundThread()
-    {
-        running = false;
-        bgthread.join();
-    }
-
-private:
-    bool running;
-    std::thread bgthread;
-
-    void (*m_Function)();
-    int m_milisecondsFrequency;
-
-    void bgWorkerFunction()
-    {
-
-        while (running)
-        {
-            m_Function();
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        }
-    }
-};
-
-int points = 0;
-int points_per_second = 1;
-void pointsIncrementerBg()
-{
-    points += points_per_second;
-    std::cout << "\rP: " << points << std::flush;
+    printf("Registered\n");
+    customFunctionPointer();
 }
 
-int main()
+void BackgroundWorker::startBackgroundThread()
 {
-    BackgroundWorker bg(&pointsIncrementerBg, 1000);
-    bg.startBackgroundThread();
+    this->isRunning = true;
+    this->bgthread = std::thread(&BackgroundWorker::bgWorkerFunction, this);
+}
 
-    while (true)
+void BackgroundWorker::stopBackgroundThread()
+{
+    this->isRunning = false;
+    this->bgthread.join();
+}
+
+
+//private member, not sure if I should define here or in header file
+const void BackgroundWorker::bgWorkerFunction()
+{
+    while (this->isRunning)
     {
-        std::string userInput;
-        std::cin >> userInput;
+        this->customFunctionPointer();  //function pointers dereferenced automatically
 
-        if (userInput == "exit") {
-            break;
-        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(this->millisecondsFrequency));
     }
-
-    bg.stopBackgroundThread();
 }

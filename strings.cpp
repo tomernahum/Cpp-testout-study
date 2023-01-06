@@ -16,7 +16,7 @@ int main() {
     const char literal_string[] = "Hello"; //const char array
     std::cout << literal_string << std::endl;
 
-    const char* literal_string2 = "Byeee";    //equivilent, since arrays are pointers
+    const char* literal_string2 = "Byeee";    //equivilent, since arrays are pointers    Edit: they are mostly just pointers
     std::cout << literal_string2 << std::endl;
     //^^ implicit terminator char at the end. 
     //pointer points to the start and functions that read it go till they see the \0 character
@@ -68,6 +68,25 @@ int main() {
     const char16_t* z = u"Hello"; // 2 byte(16bit)/char ()  //UTF-16
     const char32_t* a = U"Hello"; // 4 bytes(32bit)/char    //UTF-32
 
+
+
+
+
+    //All of the above applies to C as well
+    //C++ strings
+
+    std::string exampleString = "Hello"; //implicit type convertion see below
+    std::string exampleStringEx = (std::string)"Hello";
+
+
+    LOG("------------\n\n");
+
+    std::string str1(5, '$');
+    
+    str1.begin();
+    
+
+    std::cout << (std::string("Hello ") + "There") << std::endl;
 
 
     return 0;

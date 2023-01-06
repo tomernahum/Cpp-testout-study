@@ -42,5 +42,22 @@ int main()
     LOG(example);
     LOG(example+2);
 
+    /**/
+    LOG("----\n");
+
+    float testArray[10];
+
+    float * test1 = testArray; // pointer to float  ((start of float array))
+    float (*test2)[10] = &testArray; // pointer to float array of length 10
+
+    // pretty sure people use the first one in functions etc
+    // but it would technically be more typesafe I think to use the second one
+    
+
+
+
+
+
+
     return 0;
 }

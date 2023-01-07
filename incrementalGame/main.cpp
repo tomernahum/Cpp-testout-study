@@ -60,7 +60,7 @@ int main()
         std::string userInput;
         userInput = display.askForInput();
 
-        if (userInput == "exit") {
+        if (userInput == "exit" || userInput == "quit") {
             break;
         }
 

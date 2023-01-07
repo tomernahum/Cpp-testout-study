@@ -11,7 +11,7 @@ namespace GameData
 
 #include <chrono>
 #include <thread>
-void sleep(float seconds=0.5){
+void sleep(float seconds=1){
     std::cout << std::flush;
 
     std::this_thread::sleep_for(std::chrono::milliseconds((int)(1000*seconds)));
@@ -21,7 +21,7 @@ void sleep(float seconds=0.5){
 
 int main(int argc, char const *argv[])
 {
-    std::cout << "Points: -, Pps: -\nHello There!";
+    std::cout << "Points: -, Pps: -\nHello There!\nHHHH";
     sleep();
     //
     while (true) {
@@ -29,7 +29,8 @@ int main(int argc, char const *argv[])
     std::cout << "\033[s"; //save cursor position
     sleep();
 
-    std::cout << "\033[1A\r"; //go up a line & go to start of line
+    //std::cout << "\033[1A\r"; //go up a line & go to start of line
+    std::cout << "\033[0;0f"; //go to first char of first line
     sleep();
 
     std::cout << "Points: " << GameData::points << ", Pps: " << GameData::points_per_second;
@@ -40,6 +41,7 @@ int main(int argc, char const *argv[])
     
     GameData::points+= 19;
     //sleep();
+    break;
     }//
     
     std::cout << "\n";

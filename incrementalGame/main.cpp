@@ -33,16 +33,28 @@ void displayBg()
 {
     std::cout << "\033[s"; //save cursor position
 
-    std::cout << "\033[1A\r"; //go up a line & go to start of line
+    std::cout << "\033[0;0f"; //go to first char of first line
 
     std::cout << "Points: " << GameData::points << ", Pps: " << GameData::points_per_second;
-    
+    std::cout << "\n> "; //TODO: maybe move outside of the updating part
+
     std::cout << "\033[u"; //restore cursor position 
    
     std::cout << std::flush; //make sure it refreshes
 
     //print(GameData::points);
 
+}
+
+//TODO: maybe display class
+
+void resetDisplay()
+{
+    std::cout << "\033[2J"; //clear display
+    std::cout << "\033[0;0f"; //go to first char of first line
+
+    std::cout << "Points: " << GameData::points << ", Pps: " << GameData::points_per_second;
+    std::cout << "\n> ";
 }
 
 /*----*/
@@ -58,7 +70,7 @@ int main()
     //setup
     BackgroundWorker bgW(&pointsIncrementerBg, 1000);
     bgW.startBackgroundThread();
-
+    resetDisplay();
 
     //gameplay
     while (true)
@@ -66,11 +78,16 @@ int main()
         std::string userInput;
         std::cin >> userInput;
 
-        //std::cout << userInput << std::endl;
+        if (userInput == "shop") {
+            std::cout << "Welcome to the shop, which do you buy? \n";
+            std::cin >> userInput;
+        }
 
         if (userInput == "exit") {
             break;
         }
+
+        resetDisplay();
         
     }
 

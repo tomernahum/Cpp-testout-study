@@ -2,14 +2,25 @@
 #include <iostream>
 #include <functional>
 
-#include "display.hpp"
 #include "bgworker.hpp"
+#include "display.hpp"
+
 
 Displayer::Displayer(void (*displayFunction)())
-    : displayFunction(displayFunction)
+    : displayFunction(displayFunction), bgWorker(BackgroundWorker( [this]{this->updateDisplay();},  1000 ))
 {
     this->resetDisplay();
+    //bgWorker(   BackgroundWorker(   [this]{this->updateDisplay();},    update_freq_milliseconds   )   )
 }
+
+Displayer::Displayer(void (*displayFunction)(), int update_freq_milliseconds)
+    : displayFunction(displayFunction), bgWorker(BackgroundWorker( [this]{this->updateDisplay();},  update_freq_milliseconds ))
+{
+    this->resetDisplay();
+    //bgWorker(   BackgroundWorker(   [this]{this->updateDisplay();},    update_freq_milliseconds   )   )
+}
+
+
 
 void Displayer::setDisplayFunction(void (*function_pointer)())
 {
@@ -40,12 +51,20 @@ void Displayer::resetDisplay()
 
 void Displayer::startDisplay()
 {
-    //TODO
+    
+    std::function<void()> func = [this]{this->updateDisplay();};
+    this->bgWorker.startBackgroundThread();
+    
+    /*
+    ^ Might be bad practice idk. 
+    I am kind of trying to mix OOP and functionalish programming it feels like maybe?
+    */
 
-    //void(*bgFunc)() = [this]{this->updateDisplay();}; // Why...
-    //BackgroundWorker displayBgw(&bgFunc, 1000); 
+}
 
-    //std::function<void()> func = [this]{this->updateDisplay();};
+void Displayer::stopDisplay()
+{
+    this->bgWorker.stopBackgroundThread();
 }
 
 //Below Functions are WIP
@@ -54,7 +73,7 @@ void Displayer::displayText(std::string text)
     std::cout << text;
 }
 
-std::string Displayer::getInput()
+std::string Displayer::askForInput()
 {
     std::string userInput;
     std::cin >> userInput;

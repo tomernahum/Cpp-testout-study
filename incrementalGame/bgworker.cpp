@@ -1,10 +1,10 @@
 #include "bgworker.hpp"
 
-BackgroundWorker::BackgroundWorker(void (*function_pointer)(), int milliseconds_frequency)
-    : customFunctionPointer(function_pointer), millisecondsFrequency(milliseconds_frequency)
+BackgroundWorker::BackgroundWorker(std::function<void()> function_pointer, int milliseconds_frequency)
+    : customFunction(function_pointer), millisecondsFrequency(milliseconds_frequency)
 {
     printf("Registered\n");
-    customFunctionPointer();
+    customFunction();
 }
 
 void BackgroundWorker::startBackgroundThread()
@@ -25,7 +25,7 @@ const void BackgroundWorker::bgWorkerFunction()
 {
     while (this->isRunning)
     {
-        this->customFunctionPointer();  //function pointers dereferenced automatically
+        this->customFunction();  //function pointers dereferenced automatically
 
         std::this_thread::sleep_for(std::chrono::milliseconds(this->millisecondsFrequency));
     }

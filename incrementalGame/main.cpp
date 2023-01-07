@@ -50,32 +50,35 @@ int main()
     pointsIncrementerBgw.startBackgroundThread();
 
     Displayer display(&displayFunc);
-    display.startDisplay();
+    display.startDisplay(); //not work
  
 
     //gameplay
     while (true)
     {
         std::string userInput;
-        std::cin >> userInput;
+        userInput = display.askForInput();
 
         if (userInput == "shop") {
-            std::cout << "Welcome to the shop, which do you buy? \n> ";
-            std::cin >> userInput;
-            std::cout << "Yeah I cant hear you yet, have an extra pps \n> ";
+            display.displayText("Welcome to the shop, which do you buy? \n> ");
+            userInput = display.askForInput();
+            
+            display.displayText("Yeah I cant hear you yet, have an extra pps \n> ");
             GameData::points_per_second++;
-            std::cin >> userInput; //needs this or it resets display instantly after printing so you dont see it
+            
+            userInput = display.askForInput(); //needs this or it resets display instantly after printing so you dont see it
         }
 
-        if (userInput == "exit") {
+        else if (userInput == "exit") {
             break;
         }
 
-        //resetDisplay();
+        display.resetDisplay();
         
     }
 
     //wrap up
+    display.stopDisplay();
     pointsIncrementerBgw.stopBackgroundThread();
 
     return 0;

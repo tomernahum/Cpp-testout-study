@@ -50,7 +50,7 @@ private:
 
 int points = 0;
 int points_per_second = 1;
-void pointsIncrementerBg()
+void pointsIncrementerBgFunc()
 {
     points += points_per_second;
     std::cout << "\rP: " << points << std::flush;
@@ -58,7 +58,7 @@ void pointsIncrementerBg()
 
 int main()
 {
-    BackgroundWorker bg(&pointsIncrementerBg, 1000);
+    BackgroundWorker bg(&pointsIncrementerBgFunc, 1000);
     bg.startBackgroundThread();
 
     while (true)

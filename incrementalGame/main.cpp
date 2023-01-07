@@ -4,6 +4,7 @@
 #include <string>
 
 #include "bgworker.hpp"
+#include "display.hpp"
 
 namespace GameData
 {
@@ -27,53 +28,30 @@ public:
     }
 };
 
-/*--Display--*/
 
-void displayBg()
+void displayFunc()
 {
-    std::cout << "\033[s"; //save cursor position
-    std::cout << "\033[0;0f"; //go to first char of first line
-
-    
-    //Text content
-    std::cout << "Points: " << GameData::points;
-    std::cout << "\nPps: " << GameData::points_per_second;
-    std::cout << "\n> "; //TODO: maybe move outside of the updating part
-
-    
-    std::cout << "\033[u"; //restore cursor position    
-    std::cout << std::flush; //make sure it refreshes
-
-    //print(GameData::points);
-
-}
-
-//TODO: maybe display class
-
-void resetDisplay()
-{
-    std::cout << "\033[2J"; //clear display
-    std::cout << "\033[0;0f"; //go to first char of first line
-
     std::cout << "Points: " << GameData::points;
     std::cout << "\nPps: " << GameData::points_per_second;
     std::cout << "\n> "; //TODO: maybe move outside of the updating part
 }
 
-/*----*/
 
-void pointsIncrementerBg()
+
+void pointsIncrementerBgFunc()
 {
     GameData::points += GameData::points_per_second;
-    displayBg();
 }
 
 int main()
 {
     //setup
-    BackgroundWorker bgW(&pointsIncrementerBg, 1000);
-    bgW.startBackgroundThread();
-    resetDisplay();
+    BackgroundWorker pointsIncrementerBgw(&pointsIncrementerBgFunc, 1000);
+    pointsIncrementerBgw.startBackgroundThread();
+
+    Displayer display(&displayFunc);
+    display.startDisplay();
+ 
 
     //gameplay
     while (true)
@@ -93,12 +71,12 @@ int main()
             break;
         }
 
-        resetDisplay();
+        //resetDisplay();
         
     }
 
     //wrap up
-    bgW.stopBackgroundThread();
+    pointsIncrementerBgw.stopBackgroundThread();
 
     return 0;
 }

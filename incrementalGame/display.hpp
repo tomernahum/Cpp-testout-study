@@ -10,6 +10,8 @@ public:
     void updateDisplay();
     void resetDisplay();
 
+    void startDisplay();
+
     //WIP
     void displayText(std::string text);
     std::string getInput();

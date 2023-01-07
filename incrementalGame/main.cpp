@@ -79,8 +79,11 @@ int main()
         std::cin >> userInput;
 
         if (userInput == "shop") {
-            std::cout << "Welcome to the shop, which do you buy? \n";
+            std::cout << "Welcome to the shop, which do you buy? \n> ";
             std::cin >> userInput;
+            std::cout << "Yeah I cant hear you yet, have an extra pps \n> ";
+            GameData::points_per_second++;
+            std::cin >> userInput; //needs this or it resets display instantly after printing so you dont see it
         }
 
         if (userInput == "exit") {

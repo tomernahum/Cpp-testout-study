@@ -8,8 +8,9 @@
 
 namespace GameData
 {
-    int points = 0;
+    int points = 0; //todo: would be more fun as floats I think
     int points_per_second = 1;
+    //also todo: system for rounding large numbers that wouldn't fit into bits (ie 11.5 quadrillion points)
 }
 
 //not currently used, just playing arround
@@ -49,7 +50,7 @@ int main()
     BackgroundWorker pointsIncrementerBgw(&pointsIncrementerBgFunc, 1000);
     pointsIncrementerBgw.startBackgroundThread();
 
-    Displayer display(&displayFunc);
+    Displayer display(&displayFunc, 500);
     display.startDisplay(); //not work
  
 
@@ -59,7 +60,11 @@ int main()
         std::string userInput;
         userInput = display.askForInput();
 
-        if (userInput == "shop") {
+        if (userInput == "exit") {
+            break;
+        }
+
+        else if (userInput == "shop") {
             display.displayText("Welcome to the shop, which do you buy? \n> ");
             userInput = display.askForInput();
             
@@ -69,11 +74,8 @@ int main()
             userInput = display.askForInput(); //needs this or it resets display instantly after printing so you dont see it
         }
 
-        else if (userInput == "exit") {
-            break;
-        }
 
-        display.resetDisplay();
+        display.resetDisplay(); //todo: should this be abstracted into display more etc
         
     }
 

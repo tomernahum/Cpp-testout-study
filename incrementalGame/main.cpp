@@ -32,14 +32,16 @@ public:
 void displayBg()
 {
     std::cout << "\033[s"; //save cursor position
-
     std::cout << "\033[0;0f"; //go to first char of first line
 
-    std::cout << "Points: " << GameData::points << ", Pps: " << GameData::points_per_second;
+    
+    //Text content
+    std::cout << "Points: " << GameData::points;
+    std::cout << "\nPps: " << GameData::points_per_second;
     std::cout << "\n> "; //TODO: maybe move outside of the updating part
 
-    std::cout << "\033[u"; //restore cursor position 
-   
+    
+    std::cout << "\033[u"; //restore cursor position    
     std::cout << std::flush; //make sure it refreshes
 
     //print(GameData::points);
@@ -53,8 +55,9 @@ void resetDisplay()
     std::cout << "\033[2J"; //clear display
     std::cout << "\033[0;0f"; //go to first char of first line
 
-    std::cout << "Points: " << GameData::points << ", Pps: " << GameData::points_per_second;
-    std::cout << "\n> ";
+    std::cout << "Points: " << GameData::points;
+    std::cout << "\nPps: " << GameData::points_per_second;
+    std::cout << "\n> "; //TODO: maybe move outside of the updating part
 }
 
 /*----*/

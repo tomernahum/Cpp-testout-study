@@ -51,7 +51,7 @@ int main()
     pointsIncrementerBgw.startBackgroundThread();
 
     Displayer display(&displayFunc, 500);
-    display.startDisplay(); //not work
+    display.startDisplay();
  
 
     //gameplay
@@ -84,4 +84,10 @@ int main()
     pointsIncrementerBgw.stopBackgroundThread();
 
     return 0;
+}
+
+
+void enterShop()
+{
+
 }

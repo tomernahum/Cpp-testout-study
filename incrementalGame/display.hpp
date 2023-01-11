@@ -1,12 +1,14 @@
 #pragma once
 
+#include <functional>
 
+//should stuff that modifies the actual terminal be marked as const? because it doesn't modify a member function but you could think of the terminal as a member if we were using something other than terminal    probably not even what thats about
 class Displayer
 {
 public:
-    Displayer(void (*displayFunction)());
-    Displayer(void (*displayFunction)(), int update_freq_milliseconds);
-    void setDisplayFunction(void (*function_pointer)());
+    Displayer(std::function<void()> displayFunction);
+    Displayer(std::function<void()> displayFunction, int update_freq_milliseconds);
+    void setDisplayFunction(std::function<void()> displayFunction);
     
     void updateDisplay();
     void resetDisplay();
@@ -15,10 +17,10 @@ public:
     void stopDisplay();
 
     //WIP
-    void displayText(std::string text);
+    void displayText(const std::string text);
     std::string askForInput();
 
 private:
-    void (*displayFunction)();
+    std::function<void()> displayFunction;
     BackgroundWorker bgWorker;
 };

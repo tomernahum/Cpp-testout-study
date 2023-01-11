@@ -41,7 +41,7 @@ int main(int argc, char const *argv[])
     
     GameData::points+= 19;
     //sleep();
-    break;
+    //break;
     }//
     
     std::cout << "\n";

@@ -62,7 +62,7 @@ int main(int argc, char const *argv[])
     std::getline(myFilee, myVar);
 
     //???  reads 1 char at a time
-    myFilee.get();
+    //myFilee.get(charVar); 
     myFilee.unget();  //goes back in stream
 
     //read X chars at a time, getline gets rid of the \n

@@ -35,5 +35,10 @@ int main(int argc, char const *argv[])
 
     t->printX();
     
+    std::string test = "";
+    test+= "testtt";
+    test+= '!';
+    print(test);
+
     return 0;
 }

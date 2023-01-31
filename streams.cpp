@@ -16,8 +16,8 @@ files on your hard disk are common sources / destinations that are accessed with
 
 
 
-#include <sstream> //DONT FORGET THIS for string streams
 #include <fstream> //Dont forget this for file streams
+#include <sstream> //DONT FORGET THIS for string streams
 int main(int argc, char const *argv[])
 {
     //See files.cpp andor files.cpp in test folder for file streams

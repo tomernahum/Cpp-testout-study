@@ -70,6 +70,7 @@ int main(int argc, char const *argv[])
     myFilee.getline(cstringVar, 99);
     myFile.get(cstringVar, 50);
 
+
     
     
     /*
@@ -112,6 +113,10 @@ int main(int argc, char const *argv[])
         // >> also does
     }
     
+    if (!(myFile2 >> stringVar))
+    {
+
+    }
 
 
     

@@ -54,7 +54,7 @@ int main() {
     LOG("\n"<< "Hello"[4]); //reading works you just cant write
     
 
-
+    
     
     
     LOG("");
